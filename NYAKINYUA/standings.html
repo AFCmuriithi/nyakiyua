@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nyakinyua Premier League - Season 2</title>
+  <link rel="icon" type="image/png" href="npllogo.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #37003c;
+      --secondary: #00ff87;
+      --highlight: #a100ff;
+    }
+    body {
+      background: linear-gradient(135deg, #2200ff, #bf01fe, #e365be);
+      background-attachment: fixed;
+      font-family: 'Montserrat', sans-serif;
+      padding: 20px;
+      color: #333;
+      min-height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      color: white;
+      margin: 20px 0;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    h1:after {
+      content: '';
+      display: block;
+      width: 70%;
+      height: 3px;
+      background: var(--secondary);
+      margin: 10px auto 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .table-container {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 25px;
+    }
+    .season-label {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th {
+      background: var(--primary);
+      color: white;
+      padding: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+    .team-name {
+      text-align: left;
+      font-weight: 700;
+      font-size: 1rem;
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .team-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+    .indicator  {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    .green { background: #00ff1a; }
+    .blue { background: #00f1fd; }
+    .yellow { background: #fdf500; }
+    .red { background: #ff3d00; }
+
+    .movement-up::before {
+      content: "▲";
+      color: green;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    .movement-down::before {
+      content: "▼";
+      color: red;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    .movement-same::before {
+      content: "●";
+      color: grey;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .legend {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+    }
+    .legend h3 {
+      color: var(--primary);
+      margin-top: 0;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+    }
+    .legend ul {
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .legend li {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+    .legend li span {
+      margin-right: 8px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+    }
+    footer strong {
+      color: white;
+      font-weight: 600;
+    }
+    
+    /* Modified card styles */
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 15px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 8px;
+      width: 200px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    
+    .card-image {
+      height: 120px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .card-content {
+      padding: 15px;
+      color: #333;
+    }
+    
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #2200ff, #bf01fe, #e365be);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(161, 0, 255, 0.3);
+    }
+    
+    /* FAQs floating button */
+    .rules-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--secondary), var(--highlight));
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: background 0.3s ease, transform 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .rules-button:hover {
+      background: linear-gradient(135deg, var(--highlight), var(--primary));
+      transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      h1 { font-size: 1.5rem; }
+      .table-container 
+      { padding: 15px; 
+      
+      }
+      th, td { padding: 10px 8px; }
+      .legend ul { flex-direction: column; gap: 8px; }
+      
+      .cards-container {
+        justify-content: center;
+      }
+      
+      .card {
+        width: 160px;
+      }
+      
+      .rules-button {
+        padding: 10px 18px;
+        font-size: 0.8rem;
+      }
+    }
+    /* Loader styles */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: var(--primary);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255, 255, 255, 0.2);
+      border-top: 6px solid var(--secondary);
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+      filter: blur(1px);
+      margin-bottom: 15px;
+    }
+    
+    .loader-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: #fff;
+      opacity: 0.85;
+      animation: fadein 1.5s ease-in-out infinite alternate;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    @keyframes fadein {
+      from {
+        opacity: 0.3;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .site-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  .site-header {
+    padding: 10px;
+  }
+
+  .logo-small-circle {
+    height: 2cm;
+    width: 2cm;
+    position: fixed;
+    border: 2px solid var(--secondary);
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+  footer {
+      background: #000000;
+      bottom: 0px;
+      color: #fff;
+      text-align: left;
+      padding: 25px;
+      font-family: 'Montserrat', sans-serif;
+      border-radius: 30px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
+    .contact-icons {
+      margin-top: 15px;
+    }
+
+    .contact-btn {
+      width: 45px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 10px;
+      border-radius: 50%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .contact-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .contact-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Platform-specific styles */
+    .whatsapp { background-color: #f0ecec; }
+    .gmail { background-color: #f4f0f0; }
+    .phone { background-color: #f8f6f6; }
+
+    /* Champion row (gold styling) */
+tbody tr:first-child {
+  background: linear-gradient(90deg, #e0d16f, #f0e1a6, #ffcc00); /* Gold to light gold gradient */
+  color: #000; /* Make text dark for readability */
+  font-weight: bold;
+  border-top: 2px solid #DAA520;
+  border-bottom: 2px solid #DAA520;
+
+}
+
+tbody tr:first-child img.team-logo {
+  filter: drop-shadow(0 0 3px #FFD700);
+}
+
+/* Optional: make the indicator for 1st place glow */
+tbody tr:first-child .indicator.green {
+  background-color: #FFD700;
+  box-shadow: 0 0 8px #FFD700;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html"> 
+      <img src="npllogo.png" alt="NPL Logo" class="logo-small-circle">
+    </a>
+  </header>
+  
+  
+
+  <div id="preloader">
+    <div class="loader"></div>
+    <div class="loader-text">Jitume usikue unastruggle kutafuta team yako...</div>
+  </div>
+  <script>
+    window.addEventListener("load", function () {
+      const preloader = document.getElementById("preloader");
+      preloader.style.opacity = "0";
+      setTimeout(() => preloader.style.display = "none", 500);
+
+      
+      
+    });
+  </script>
+  
+  <div class="container">
+    <h1>NPL SEASON II STANDINGS</h1>
+  
+    
+    <div class="table-container">
+      <div class="season-label">SEASON II STANDINGS</div>
+      <table>
+        <thead>
+          <tr>
+            <th><strong>#</strong></th>
+            <th></th>
+            <th><strong>Club</strong></th>
+            <th>MP</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>F</th>
+            <th>A</th>
+            <th>GD</th>
+            <th>Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="indicator green"></span>C</td><td class="movement-same"></td><td class="team-name"><img src="more.png" class="team-logo">MORe</td><td>18</td><td>15</td><td>1</td><td>2</td><td>67</td><td>28</td><td>+39</td><td><strong>46</strong></td></tr>
+        
+          <tr><td><span class="indicator blue"></span>2</td><td class="movement-same"></td><td class="team-name"><img src="jimjim.png" class="team-logo">Jimjim</td><td>18</td><td>12</td><td>0</td><td>6</td><td>49</td><td>34</td><td>+15</td><td><strong>36</strong></td></tr>
+        
+          <tr><td><span class="indicator yellow"></span>3</td><td class="movement-up"></td><td class="team-name"><img src="mashcool.png" class="team-logo">Mashcool</td><td>18</td><td>11</td><td>1</td><td>6</td><td>56</td><td>40</td><td>+16</td><td><strong>34</strong></td></tr>
+        
+          <tr><td><span class="indicator yellow"></span>4</td><td class="movement-down"></td><td class="team-name"><img src="mbuguaa.png" class="team-logo">Mbuguaa</td><td>18</td><td>11</td><td>0</td><td>7</td><td>57</td><td>46</td><td>+11</td><td><strong>33</strong></td></tr>
+        
+          <tr><td><span class="indicator yellow"></span>5</td><td class="movement-same"></td><td class="team-name"><img src="usitangaze.png" class="team-logo">Usitangaze</td><td>17</td><td>10</td><td>1</td><td>6</td><td>60</td><td>52</td><td>+8</td><td><strong>31</strong></td></tr>
+        
+          <tr><td><span class="indicator yellow"></span>6</td><td class="movement-same"></td><td class="team-name"><img src="ziyechshaddy.png" class="team-logo">Ziyechshaddy</td><td>18</td><td>9</td><td>1</td><td>8</td><td>51</td><td>45</td><td>+6</td><td><strong>28</strong></td></tr>
+        
+          <tr><td>7</td><td class="movement-same"></td><td class="team-name"><img src="hezzyngash.png" class="team-logo">Hezzyngash</td><td>17</td><td>9</td><td>1</td><td>7</td><td>50</td><td>48</td><td>+2</td><td><strong>28</strong></td></tr>
+        
+          <tr><td>8</td><td class="movement-same"></td><td class="team-name"><img src="odegaard.png" class="team-logo">Ødegaard</td><td>18</td><td>6</td><td>1</td><td>11</td><td>37</td><td>52</td><td>-15</td><td><strong>19</strong></td></tr>
+        
+          <tr><td>9</td><td class="movement-same"></td><td class="team-name"><img src="re.png" class="team-logo">RE,,</td><td>18</td><td>3</td><td>0</td><td>15</td><td>35</td><td>60</td><td>-25</td><td><strong>9</strong></td></tr>
+        
+          <tr><td><span class="indicator red"></span>10</td><td class="movement-same"></td><td class="team-name"><img src="haxxy.png" class="team-logo">Haxxy</td><td>18</td><td>0</td><td>0</td><td>18</td><td>10</td><td>67</td><td>-57</td><td><strong>0</strong></td></tr>
+        </tbody>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          
+      </table>
+    </div>
+
+    <div class="legend">
+      <h3>key</h3>
+      <ul>
+        <li><span class="indicator green"></span>Champion</li>
+        <li><span class="indicator blue"></span>Runner-up</li>
+        <li><span class="indicator yellow"></span>3rd Place Playoffs</li>
+        <li><span class="indicator red"></span>JARIBU DREAMLEAGUE BOIS😏</li>
+      </ul>
+    </div>
+    
+    <!-- Added cards section - minimized and left-aligned -->
+    <div class="cards-container">
+      <div class="card">
+        <div class="card-image" style="background-image: url('standingslogo.png');"></div>
+        <div class="card-content">
+          <h3 class="card-title">Results</h3>
+          <a href="results.html" class="btn">View</a>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image" style="background-image: url('fixtureslogo.png');"></div>
+        <div class="card-content">
+          <h3 class="card-title">Fixtures</h3>
+          <a href="fixtures.html" class="btn">View</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image" style="background-image: url('npllogo.png');"></div>
+      <div class="card-content">
+        <h3 class="card-title">HOME</h3>
+        <a href="welcome.html" class="btn">View</a>
+      </div>
+    </div>
+    
+  </div>
+  <footer>
+    <p>Powered by <strong>GEORGE-FOOTY</strong></p>
+    <p>&copy; 2025 <strong>NPL - eFOOTBALL MOBILE 2025</strong></p>
+    <p>Contact:</p>
+    <div class="contact-icons">
+      <a href="https://wa.me/254718379519" target="_blank" class="contact-btn whatsapp" title="WhatsApp">
+        <img src="whatsapp.png" alt="WhatsApp">
+      </a>
+      <a href="mailto:muriithigeorge62@gmail.com" class="contact-btn gmail" title="Gmail">
+        <img src="gmail.png" alt="Gmail">
+      </a>
+      <a href="tel:+254718379519" class="contact-btn phone" title="Phone">
+        <img src="phone.png" alt="Phone">
+      </a>
+    </div>
+  </footer>
+  
+  
+  </div>
+</body>
+</html>

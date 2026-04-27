@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nyakinyua Premier League - NPL</title>
+  <link rel="icon" type="image/png" href="npllogo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #37003c;
+      --secondary: #00ff87;
+      --highlight: #a100ff;
+      --bg: #f4f4f4;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      background: linear-gradient(135deg, #2200ff, #bf01fe, #e365be);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: white;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: white;
+      font-size: 3rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    h1::after {
+      content: "";
+      display: block;
+      width: 200px;
+      height: 5px;
+      background: var(--secondary);
+      margin: 15px auto 30px;
+      border-radius: 4px;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: var(--secondary);
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      color: rgba(255,255,255,0.85);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      width: 320px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .card-image {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-content {
+      padding: 25px;
+      color: #333;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--highlight), var(--primary));
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(161, 0, 255, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    footer a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    
+    .rules-button {
+      position: fixed;
+      bottom: 0px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--secondary), var(--highlight));
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: background 0.3s ease, transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .rules-button:hover {
+      background: linear-gradient(135deg, var(--highlight), var(--primary));
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .cards-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .rules-button {
+        padding: 10px 18px;
+        font-size: 0.8rem;
+      }
+    }
+    /* Loader styles */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top: 6px solid var(--secondary);
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  filter: blur(1px);
+  margin-bottom: 15px;
+}
+
+.loader-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  color: #fff;
+  opacity: 0.85;
+  animation: fadein 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.site-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  .site-header {
+    padding: 10px;
+  }
+
+  .logo-small-circle {
+    height: 2cm;
+    width: 2cm;
+    position: fixed;
+    border: 2px solid var(--secondary);
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+  footer {
+      background: #000000;
+      bottom: 0;
+      color: #fff;
+      text-align: left;
+      padding: 25px;
+      font-family: 'Montserrat', sans-serif;
+      border-radius: 30px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
+    .contact-icons {
+      margin-top: 15px;
+    }
+
+    .contact-btn {
+      width: 45px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 10px;
+      border-radius: 50%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .contact-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .contact-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Platform-specific styles */
+    .whatsapp { background-color: #f0ecec; }
+    .gmail { background-color: #f4f1f1; }
+    .phone { background-color: #f8f6f6; }
+
+    /* Fullscreen overlay */
+.champion-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at center, #fff8dc, #ffd700);
+  z-index: 9999;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 5s ease-in-out forwards;
+}
+
+/* Big zoom message */
+.champion-text {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #b8860b;
+  text-shadow: 0 0 15px #fff, 0 0 30px gold;
+  animation: zoomOut 1.5s ease forwards;
+  z-index: 10000;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+@keyframes zoomOut {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0%, 85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Flowers and confetti flying down */
+.floating-flower {
+  position: absolute;
+  top: -30px;
+  font-size: 1.8rem;
+  pointer-events: none;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div id="champion-popup" class="champion-overlay">
+    
+    <div id="champion-text" class="champion-text">
+      🏆 CONGRATULATION TO MORe on winning the league!
+    </div>
+  </div>
+  
+
+  <header class="site-header">
+    <a href="index.html"> 
+      <img src="npllogo.png" alt="NPL Logo" class="logo-small-circle">
+    </a>
+  </header>
+
+  <div id="preloader">
+    <div class="loader"></div>
+    <div class="loader-text">Hapa kama huna skills hautoboi...</div>
+  </div>
+  
+  <div class="container">
+    <h1>NYAKINYUA PREMIER LEAGUE</h1>
+    <h2>OFFICIAL SITE</h2>
+    <div class="subtitle">The official hub for all NPL SEASON II updates, results, fixtures, and standings</div>
+    
+    <div class="cards-container">
+      <div class="card">
+        <div class="card-image" style="background-image: url('standingslogo.png');"></div>
+        <div class="card-content">
+          <h3 class="card-title">Matchweek Results</h3>
+          <p class="card-desc">View all the latest results.</p>
+          <a href="results.html" class="btn">View Results</a>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image" style="background-image: url('fixtureslogo.png');"></div>
+        <div class="card-content">
+          <h3 class="card-title">Upcoming Fixtures</h3>
+          <p class="card-desc">View all upcoming Men vs Boys.</p>
+          <a href="fixtures.html" class="btn">View Fixtures</a>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image" style="background-image: url('resultslogo.png');"></div>
+        <div class="card-content">
+          <h3 class="card-title">League Standings</h3>
+          <p class="card-desc">Current league table standings.</p>
+          <a href="standings.html" class="btn">View Standings</a>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>Powered by <strong>GEORGE-FOOTY</strong></p>
+      <p>&copy; 2025 <strong>NPL - eFOOTBALL MOBILE 2025</strong></p>
+      <p>Contact:</p>
+      <div class="contact-icons">
+        <a href="https://wa.me/254718379519" target="_blank" class="contact-btn whatsapp" title="WhatsApp">
+          <img src="whatsapp.png" alt="WhatsApp">
+        </a>
+        <a href="mailto:muriithigeorge62@gmail.com" class="contact-btn gmail" title="Gmail">
+          <img src="gmail.png" alt="Gmail">
+        </a>
+        <a href="tel:+254718379519" class="contact-btn phone" title="Phone">
+          <img src="phone.png" alt="Phone">
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- FAQs floating button -->
+  <a href="faqs.html" class="rules-button">FAQs</a>
+  <script>
+    window.addEventListener("load", function () {
+      const preloader = document.getElementById("preloader");
+      preloader.style.opacity = "0";
+      setTimeout(() => preloader.style.display = "none", 500);
+
+    });
+window.addEventListener('load', () => {
+  const popup = document.getElementById('champion-popup');
+  const emojiList = [
+  "🌸", "🌼", "💐", "🌷", "🌻", "🌺",   // Flowers
+  "🎉", "🎊", "🎆", "🎇",              // Confetti & Fireworks
+  "🏆", "🥇", "🏅",                   // Trophies
+  "✨", "💫", "🌟", "🔥",             // Sparkles
+  "🙌", "👏", "🤩"                   // Hands/Celebration Faces
+];
+
+  // Add 50 falling emojis
+  for (let i = 0; i < 50; i++) {
+    const emoji = document.createElement('div');
+    emoji.classList.add('floating-flower');
+    emoji.innerText = emojiList[Math.floor(Math.random() * emojiList.length)];
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.fontSize = (Math.random() * 15 + 20) + "px";
+    emoji.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    popup.appendChild(emoji);
+  }
+
+  // Hide entire popup after 5 seconds
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 5000);
+});
+  
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to NPL</title>
+  <link rel="icon" type="image/png" href="npllogo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #37003c;
+      --secondary: #00ff87;
+      --highlight: #a100ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #000000, #000000, #000000);
+      background-attachment: fixed;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('https://images.unsplash.com/photo-1567558091198-7220f5b2646e?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25);
+      z-index: 0;
+    }
+
+    .welcome-container {
+      z-index: 1;
+      padding: 40px;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #2200ff, #bf01fe, #e365be);
+      color: white;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 255, 135, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      p {
+        font-size: 1rem;
+        padding: 0 20px;
+      }
+    }
+    /* Loader styles */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top: 6px solid var(--secondary);
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  filter: blur(1px);
+  margin-bottom: 15px;
+}
+
+.loader-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  color: #fff;
+  opacity: 0.85;
+  animation: fadein 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+footer {
+      background: #000000;
+      color: #fff;
+      text-align: center;
+      padding: 25px;
+      font-family: 'Montserrat', sans-serif;
+      border-radius: 30px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
+    .contact-icons {
+      margin-top: 15px;
+    }
+
+    .contact-btn {
+      width: 45px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 10px;
+      border-radius: 50%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .contact-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .contact-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Platform-specific styles */
+    .whatsapp { background-color: #f0ecec; }
+    .gmail { background-color: #f4f1f1; }
+    .phone { background-color: #f8f6f6; }
+
+/* Galaxy Background - Stars and Glows */
+#stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: -2;
+}
+
+.galaxy-glow {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 0, 255, 0.15), transparent 50%),
+              radial-gradient(circle at 70% 40%, rgba(0, 255, 255, 0.1), transparent 50%),
+              radial-gradient(circle at 50% 80%, rgba(0, 100, 255, 0.1), transparent 50%);
+  animation: galaxyShift 12s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes galaxyShift {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <canvas id="stars"></canvas>
+  <div class="galaxy-glow"></div>
+  
+
+  <div id="preloader">
+    <div class="loader"></div>
+    <div class="loader-text">Tulia naingia...</div>
+  </div>
+  
+  <div class="overlay"></div>
+
+  <div class="welcome-container">
+    <h1>Welcome to Nyakinyua Premier League!</h1>
+        <a href="welcome.html" class="btn">Continue to Site</a>
+  </div>
+  <script>
+    window.addEventListener("load", function () {
+      const preloader = document.getElementById("preloader");
+      preloader.style.opacity = "0";
+      setTimeout(() => preloader.style.display = "none", 500);
+    });
+
+    const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+let stars = [];
+let shootingStars = [];
+let w, h;
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+
+  // Generate background stars
+  stars = Array.from({ length: 200 }, () => ({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    radius: Math.random() * 1.5,
+    alpha: Math.random(),
+    dx: (Math.random() - 0.5) * 0.3,
+    dy: (Math.random() - 0.5) * 0.3,
+  }));
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, w, h);
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+    ctx.fill();
+
+    // movement
+    star.x += star.dx;
+    star.y += star.dy;
+    if (star.x < 0 || star.x > w) star.dx *= -1;
+    if (star.y < 0 || star.y > h) star.dy *= -1;
+
+    // twinkle
+    star.alpha += (Math.random() - 0.5) * 0.02;
+    star.alpha = Math.max(0.1, Math.min(1, star.alpha));
+  });
+}
+
+function createShootingStar() {
+  shootingStars.push({
+    x: Math.random() * w,
+    y: 0,
+    length: 300 + Math.random() * 200,
+    speed: 8 + Math.random() * 4,
+    angle: Math.PI / 4,
+    alpha: 1
+  });
+}
+
+function drawShootingStars() {
+  shootingStars.forEach((s, i) => {
+    const vx = Math.cos(s.angle) * s.speed;
+    const vy = Math.sin(s.angle) * s.speed;
+    s.x += vx;
+    s.y += vy;
+    s.alpha -= 0.01;
+
+    ctx.beginPath();
+    ctx.moveTo(s.x, s.y);
+    ctx.lineTo(s.x - vx * 10, s.y - vy * 10);
+    ctx.strokeStyle = `rgba(255, 255, 255, ${s.alpha})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    if (s.alpha <= 0) {
+      shootingStars.splice(i, 1);
+    }
+  });
+}
+
+function draw() {
+  drawStars();
+  drawShootingStars();
+  requestAnimationFrame(draw);
+}
+
+setInterval(() => {
+  if (Math.random() < 0.3) createShootingStar(); // occasional shooting star
+}, 2000);
+
+window.addEventListener('resize', resize);
+resize();
+draw();
+
+  </script>
+  
+</body>
+</html>

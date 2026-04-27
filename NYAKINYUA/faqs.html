@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NPL Rules - Season 2</title>
+  <link rel="icon" type="image/png" href="npllogo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #37003c;
+      --secondary: #00ff87;
+      --highlight: #a100ff;
+      --text-light: #ffffff;
+      --text-dark: #1a1a1a;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px 15px;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #2200ff, #bf01fe, #e365be);
+      background-attachment: fixed;
+      color: var(--text-light);
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    h1::after {
+      content: "";
+      display: block;
+      width: 160px;
+      height: 5px;
+      background: var(--secondary);
+      margin: 15px auto 30px;
+      border-radius: 4px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      color: var(--text-dark);
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      border-left: 5px solid var(--highlight);
+      padding-left: 10px;
+    }
+
+    .highlight {
+      color: var(--highlight);
+      font-weight: 600;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    li, p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .quote {
+      font-style: italic;
+      font-size: 1.1rem;
+      text-align: center;
+      margin: 50px auto 30px;
+      max-width: 800px;
+      color: var(--secondary);
+      border-left: 5px solid var(--highlight);
+      padding-left: 15px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.95rem;
+      margin-top: 50px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    footer strong {
+      color: var(--highlight);
+    }
+
+    footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card h2 {
+        font-size: 1.2rem;
+      }
+
+      li, p {
+        font-size: 0.95rem;
+      }
+
+      .quote {
+        font-size: 1rem;
+      }
+    }
+    /* Loader styles */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top: 6px solid var(--secondary);
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  filter: blur(1px);
+  margin-bottom: 15px;
+}
+
+.loader-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  color: #fff;
+  opacity: 0.85;
+  animation: fadein 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.site-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  .site-header {
+    padding: 10px;
+  }
+
+  .logo-small-circle {
+    height: 2cm;
+    width: 2cm;
+    position: fixed;
+    border: 2px solid var(--secondary);
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  footer {
+      background: #000000;
+      color: #fff;
+      text-align: center;
+      padding: 25px;
+      font-family: 'Montserrat', sans-serif;
+      border-radius: 30px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
+    .contact-icons {
+      margin-top: 15px;
+    }
+
+    .contact-btn {
+      width: 45px;
+      height: 45px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 10px;
+      border-radius: 50%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .contact-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .contact-btn:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Platform-specific styles */
+    .whatsapp { background-color: #f0ecec; }
+    .gmail { background-color: #f4f1f1; }
+    .phone { background-color: #f8f6f6; }
+
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a href="welcome.html" class="logo-link" title="Go to Home">
+      <img src="npllogo.png" alt="NPL Logo" class="logo-small-circle">
+    </a>
+  </header>
+  <div id="preloader">
+    <div class="loader"></div>
+    <div class="loader-text">Polepole utaelewa kila kitu...</div>
+  </div>
+  
+
+  <h1>🦁 Nyakinyua Premier League – Frequently Asked Questions</h1>
+
+<div class="card">
+  <p class="highlight">🎮 eFootball | Play With Passion. Fight for the Crown.</p>
+</div>
+
+<div class="card">
+  <h2>🎯 How is the League Structured?</h2>
+  <ul>
+    <li><span class="highlight">Game Duration:</span> Each match lasts 12 minutes</li>
+    <li><span class="highlight">Entry Fee:</span> Ksh 50 per participant</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>💰 What’s the Prize Breakdown?</h2>
+  <p>Top 3 participants share the prize pool:</p>
+  <ul>
+    <li>🥇 <span class="highlight">1st Place</span> – 50%</li>
+    <li>🥈 <span class="highlight">2nd Place</span> – 30%</li>
+    <li>🥉 <span class="highlight">3rd Place</span> – 20% (via playoff)</li>
+  </ul>
+  <p><span class="highlight">How does the 3rd Place Playoff work?</span></p>
+  <ul>
+    <li>Players ranked 3rd to 6th play in a knockout mini-tournament</li>
+    <li>The winner takes home the 20% prize</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>📜 How are Matches Played?</h2>
+  <p><span class="highlight">Match Format:</span></p>
+  <ul>
+    <li>12-minute matches</li>
+    <li>No extra time or penalties</li>
+    <li>Fair play is expected at all times</li>
+  </ul>
+
+  <p><span class="highlight">What if someone gets disconnected?</span></p>
+  <ul>
+    <li>If it happens before the 70th minute:</li>
+    <ul>
+      <li>Resume the match from the point of disconnection</li>
+      <li>Score remains as it was</li>
+    </ul>
+    <li>If a player refuses to continue, see the next point</li>
+  </ul>
+
+  <p><span class="highlight">What if someone quits the match?</span></p>
+  <ul>
+    <li>If a player quits after the 70th minute while losing:</li>
+    <ul>
+      <li>The match is considered final</li>
+      <li>Winner’s score is recorded</li>
+      <li>The quitter’s goals are void</li>
+    </ul>
+    <li>No rematches, no messages, no disputes</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>🚫 What Happens if Someone Acts Unfairly?</h2>
+  <ul>
+    <li>Report any disputes or issues in the official group</li>
+    <li>Not ready to play? Reschedule before kickoff</li>
+    <li>No excuses once the game starts</li>
+    <li>Poor behavior or fake lagging may lead to a <span class="highlight">0–3 loss</span></li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>📅 What if Someone Misses a Game?</h2>
+  <ul>
+    <li>All games should be completed as per schedule</li>
+    <li>Missed game? It results in a <span class="highlight">3–0 walkover</span></li>
+    <li>Repeated no-shows = <span class="highlight">disqualification</span></li>
+    <li><span class="highlight">Grace Period:</span> You have until <strong>7 PM the next day</strong> to play. After that, a walkover is enforced.</li>
+  </ul>
+</div>
+
+<div class="quote">
+  “Don’t just play — show up with hunger. Win with pride, lose with honor. No complaints, no shortcuts, be at your Best.”
+</div>
+
+<footer>
+  <p>Powered by <strong>GEORGE-FOOTY</strong></p>
+  <p>&copy; 2025 <strong>NPL - eFOOTBALL MOBILE 2025</strong></p>
+  <p>Contact:</p>
+  <div class="contact-icons">
+    <a href="https://wa.me/254718379519" target="_blank" class="contact-btn whatsapp" title="WhatsApp">
+      <img src="whatsapp.png" alt="WhatsApp">
+    </a>
+    <a href="mailto:muriithigeorge62@gmail.com" class="contact-btn gmail" title="Gmail">
+      <img src="gmail.png" alt="Gmail">
+    </a>
+    <a href="tel:+254718379519" class="contact-btn phone" title="Phone">
+      <img src="phone.png" alt="Phone">
+    </a>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener("load", function () {
+    const preloader = document.getElementById("preloader");
+    preloader.style.opacity = "0";
+    setTimeout(() => preloader.style.display = "none", 500);
+  });
+</script>
+</body>
+</html>
